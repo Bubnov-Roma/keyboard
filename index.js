@@ -185,10 +185,14 @@ function userInput(event) {
     activEl.classList.add("active");
   }
 
-  if (target.closest(".keyboard__key") || event.type === "mousedown") {
+  if (target.closest("keyboard__key") || event.type === "mousedown") {
     event.preventDefault();
-    const activEl = document.getElementById(target.dataset.code);
-    activEl.classList.add("active");
+    try {
+      const activEl = document.getElementById(target.dataset.code);
+      activEl.classList.add("active");
+    } catch (e) {
+      console.log("Oops.. missed a key a bit) Try again!")
+    }
   }
 
   if (event.target.innerText === "Backspace" || code === "Backspace") {
