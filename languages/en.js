@@ -205,11 +205,6 @@ export default [
     code: "Backslash",
   },
   {
-    small: "Enter",
-    shift: null,
-    code: "Enter",
-  },
-  {
     small: "Shift",
     shift: null,
     code: "ShiftLeft",
@@ -285,20 +280,30 @@ export default [
     code: "AltLeft",
   },
   {
+    small: "command",
+    shift: null,
+    code: "MetaLeft",
+  },
+  {
     small: " ",
     shift: null,
     code: "Space",
+  },
+  {
+    small: "command",
+    shift: null,
+    code: "MetaRight",
   },
   {
     small: "Alt",
     shift: null,
     code: "AltRight",
   },
-  {
-    small: "Ctrl",
-    shift: null,
-    code: "ControlRight",
-  },
+  // {
+  //   small: "Ctrl",
+  //   shift: null,
+  //   code: "ControlRight",
+  // },
   {
     small: "&larr;",
     shift: null,

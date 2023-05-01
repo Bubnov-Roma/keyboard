@@ -4,32 +4,52 @@ import languages from "./languages/lang.js";
 const BODY = document.querySelector("body"); 1
 
 const INPUT = document.createElement("textarea");
-let caps = Boolean();
 const KEYBOARD = document.createElement("section");
 const KEY = document.createElement("div");
 
+const INSTRUCTION = document.createElement("div");
 
 
 INPUT.classList.add("input_area");
 KEYBOARD.classList.add("keyboard");
 KEY.classList.add("keyboard__key");
+INSTRUCTION.classList.add("instruction");
 
 BODY.appendChild(INPUT);
+BODY.appendChild(INSTRUCTION);
 BODY.appendChild(KEYBOARD);
 KEYBOARD.appendChild(KEY);
 
+INSTRUCTION.innerText = "Use the 'Ctrl' button to switch Language "
 
+INPUT.setAttribute("readonly", "readonly");
+
+const whatLang = get("language");
+let langKeys = (whatLang === '"en"') ? languages.en : languages.ru;
+
+function switchLanguage() {
+
+  if (langKeys === languages.en) {
+    langKeys = languages.ru;
+    set("language", "ru");
+  } else {
+    langKeys = languages.en;
+    set("language", "en");
+  }
+  keyBoardRender();
+};
 
 const KeyContainer = [];
 
-for (let i = 0; i < languages.en.length; i++) {
+
+for (let i = 0; i < langKeys.length; i++) {
   let Btn = document.createElement("div");
   Btn.classList.add("keyboard__key");
 
   let BtnTitle = document.createElement("div");
   BtnTitle.classList.add("key-title");
 
-  const KEY = new Key(languages.en[i]);
+  const KEY = new Key(langKeys[i]);
   BtnTitle.innerHTML = KEY.shift;
 
   let BtnSubtitle = document.createElement("div");
@@ -44,6 +64,18 @@ for (let i = 0; i < languages.en.length; i++) {
   KEYBOARD.appendChild(Btn);
   KeyContainer.push(Btn);
 }
+
+function keyBoardRender() {
+  let keyBoardArr = document.getElementsByClassName("keyboard__key");
+  let titleArr = document.getElementsByClassName("key-title");
+  let subtitleArr = document.getElementsByClassName("key-subtitle");
+  for (let i = 0; i < keyBoardArr.length - 1; i++) {
+    const KEY = new Key(langKeys[i]);
+    titleArr[i].innerHTML = KEY.shift;
+    subtitleArr[i].innerHTML = KEY.small;
+  }
+}
+
 
 // console.log(languages.en);
 
@@ -139,11 +171,10 @@ document.addEventListener("keydown", userInput);
 document.addEventListener("keyup", disabled);
 
 function userInput(event) {
+  INPUT.focus();
   // event.preventDefault();
 
   const { code, target } = event;
-
-  console.log(code);
   // console.log(target.dataset.code);
   // const keyCode = KeyContainer.find((el) => el.code === code && el.code === target.dataset.code);
 
@@ -156,7 +187,6 @@ function userInput(event) {
 
   if (target.closest(".keyboard__key") || event.type === "mousedown") {
     event.preventDefault();
-    console.log("mousedown")
     const activEl = document.getElementById(target.dataset.code);
     activEl.classList.add("active");
   }
@@ -170,12 +200,16 @@ function userInput(event) {
   } else if (event.target.innerText === "Space" || code === " ") {
     INPUT.innerHTML = INPUT.innerHTML + " ";
     INPUT.selectionStart += 1;
-  } else if (event.target.innerText === "←" || code === "←") {
-    // console.log("ArrowLeft");
-    console.log(INPUT.selectionStart);
+  } else if (event.target.innerText === "Ctrl" || code === "ControlLeft") {
+    console.log("Ctrl");
+    switchLanguage();
+    // INPUT.innerHTML = INPUT.innerHTML + "";
+    // INPUT.selectionStart += 1;
+  } else if (event.target.innerText === "←" || code === "ArrowLeft") {
+    // console.log(INPUT.selectionStart);
     INPUT.selectionStart -= 1;
     // INPUT.selectionDirection
-    console.log(INPUT.selectionDirection);
+    // console.log(INPUT.selectionDirection);
   } else {
     //  console.log(event.target.innerText);
     // if (event.target.dataset.code === "undefined") {
@@ -190,10 +224,11 @@ function userInput(event) {
       //         return INPUT.innerHTML += el.small;
       //       }
       //     })
+      console.log(event.target.innerText);
       INPUT.innerHTML += event.target.lastChild.innerHTML;
       INPUT.selectionStart++;
     } else {
-      languages.en.find((el) => {
+      langKeys.find((el) => {
         if (el.code === code) {
           return INPUT.innerHTML += el.small;
         }
@@ -213,8 +248,25 @@ function disabled(event) {
     elRemuveActive.classList.remove("active");
   }
   if (target.dataset.code) {
-    console.log("mouseUp")
     const activEl = document.getElementById(target.dataset.code);
     activEl.classList.remove("active");
   }
 }
+
+function set(name, value) {
+  window.localStorage.setItem(name, JSON.stringify(value));
+}
+
+function get(name) {
+  let result = window.localStorage.getItem(name);
+  if (!result) {
+    return "en";
+  }
+  return result;
+}
+
+function del(name) {
+  localStorage.removeItem(name);
+}
+
+

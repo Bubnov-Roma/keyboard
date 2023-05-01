@@ -5,6 +5,7 @@ body {
 }
 
 .input_area {
+  font-family: 'Courier New', Courier, monospace;
   margin: 3rem auto;
   display: flex;
   width: calc(100% - 10rem);
@@ -13,6 +14,14 @@ body {
   border-radius: 0.5%;
   margin-bottom: 5%;
   font-size: 3rem;
+}
+
+.instruction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 2%;
+  font-size: 150%;
 }
 
 .keyboard {
