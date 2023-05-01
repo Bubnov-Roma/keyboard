@@ -1,0 +1,106 @@
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.input_area {
+  margin: 3rem auto;
+  display: flex;
+  width: calc(100% - 10rem);
+  height: 20rem;
+  border:0.11rem solid;
+  border-radius: 0.5%;
+  margin-bottom: 5%;
+  font-size: 3rem;
+}
+
+.keyboard {
+  /* display: flex; */
+  padding: 0.5rem;
+  display: grid; 
+  grid-gap: 0.5rem;
+  grid-template-columns: repeat(14, auto);
+    /* Два ряда */
+    grid-template-rows: repeat(5, 1fr);
+    /* Автоматическое размещение в ряд */
+    grid-auto-flow: row;
+  /* grid-template-columns: repeat(13, 1fr) 10%; */
+  /* grid-template-rows: repeat(5, 1fr);  */
+  width: auto;
+  border: 0.11rem solid;
+  border-radius: 0.5%;
+}
+
+.keyboard__key {
+  position: relative;
+  /* display: flex; */
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.3rem;
+  /* width: 46%; */
+  /* height: 3.3rem; */
+  border-radius: 3%;
+  font-size: 1rem;
+  background-color: #414040;
+  color: #f0f0f0;
+  border: #101010 1px solid;
+}
+
+/* .keyboard__key[data-code="CapsLock"]::before {
+  position: absolute;
+  content: "•";
+  color: #8ed9ff;
+} */
+
+.keyboard__key:first-child {
+  display: none;
+}
+
+.keyboard__key.active {
+  background-color: #5fff87;
+  color: #403f3f;
+}
+
+.key-title {
+  pointer-events: none;
+  align-self: self-start;
+}
+
+.key-subtitle {
+  pointer-events: none;
+  align-self:self-end;
+}
+
+.keyboard__key[data-code="Space"] {
+  grid-column: span 5;
+}
+
+.keyboard__key[data-code="Tab"] {
+  grid-column: span 2;
+}
+
+.keyboard__key[data-code="CapsLock"] {
+  grid-column: span 2;
+}
+
+/* .keyboard__key[data-code="CapsLock"] {
+  position: relative;
+  grid-column: span 2;
+} */
+
+.keyboard__key[data-code="ArrowLeft"] {
+  height: 50%;
+}
+
+.keyboard__key[data-code="ArrowUp"] {
+  height: 50%;
+}
+
+.keyboard__key[data-code="ArrowDown"] {
+  height: 50%;
+}
+
+.keyboard__key[data-code="ArrowRight"] {
+  height: 50%;
+}
